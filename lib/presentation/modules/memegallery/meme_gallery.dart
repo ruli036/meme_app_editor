@@ -23,6 +23,7 @@ class MemeGalleryPage extends StatelessWidget {
               child: RefreshIndicator(
                 onRefresh: () => controller.getImages(),
                 child: StateHandler(
+                  onRefresh: () => controller.getImages(),
                   isEmpty: controller.images.isEmpty,
                   isLoading: controller.loading.value,
                   child: GridView.builder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class StateHandler extends StatelessWidget {
   const StateHandler({
@@ -10,6 +11,7 @@ class StateHandler extends StatelessWidget {
     this.errorView,
     this.isEmpty,
     this.emptyView,
+    this.onRefresh,
   });
 
   final bool? isLoading;
@@ -19,6 +21,7 @@ class StateHandler extends StatelessWidget {
   final Widget? errorView;
   final Widget? emptyView;
   final Widget child;
+  final Callback? onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +30,25 @@ class StateHandler extends StatelessWidget {
     }
 
     if (isError ?? false) {
-      return errorView ?? const Center(child: Text("Error"));
+      return errorView ?? Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("Error"),
+          IconButton(onPressed: onRefresh, icon: Icon(Icons.refresh))
+        ],
+      );
     }
 
     if (isEmpty ?? false) {
-      return emptyView ?? const Center(child: Text("No Data"));
+      return emptyView ?? Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("No Data"),
+          IconButton(onPressed: onRefresh, icon: Icon(Icons.refresh))
+        ],
+      );
     }
 
     return child;

@@ -10,33 +10,48 @@ import 'package:permission_handler/permission_handler.dart';
 
 Future<Uint8List?> renderToImage(GlobalKey key) async {
   try {
-    final boundary = key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    final boundary =
+        key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
     if (boundary == null) return null;
 
     final image = await boundary.toImage(pixelRatio: 3.0);
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     return byteData?.buffer.asUint8List();
   } catch (e) {
-    print("Error rendering image: $e");
+    Get.snackbar(
+      'Fail rendering image',
+      'something was wrong :$e',
+      backgroundColor: Colors.grey,
+      colorText: Colors.white,
+    );
     return null;
   }
 }
 
 Future<bool> saveImageToGallery(Uint8List imageBytes) async {
-  Get.defaultDialog(backgroundColor: Colors.transparent, content: CircularProgressIndicator());
+  Get.defaultDialog(
+    backgroundColor: Colors.transparent,
+    content: CircularProgressIndicator(),
+  );
   MediaStore.appFolder = "Meme Editor";
   final permissionStatus = await Permission.storage.request();
   final status = await Permission.manageExternalStorage.status;
   if (!permissionStatus.isGranted && !status.isGranted) {
     Get.back();
-    Get.snackbar('Permission Denied', 'Fail to save image',backgroundColor: Colors.grey,colorText: Colors.white);
+    Get.snackbar(
+      'Permission Denied',
+      'Fail to save image',
+      backgroundColor: Colors.grey,
+      colorText: Colors.white,
+    );
     requestPermission();
     return false;
   }
 
   try {
     final tempDir = await getTemporaryDirectory();
-    final filePath = '${tempDir.path}/meme_${DateTime.now().millisecondsSinceEpoch}.png';
+    final filePath =
+        '${tempDir.path}/meme_${DateTime.now().millisecondsSinceEpoch}.png';
     final file = await File(filePath).writeAsBytes(imageBytes);
 
     final mediaStore = MediaStore();
@@ -49,9 +64,23 @@ Future<bool> saveImageToGallery(Uint8List imageBytes) async {
     return result != null && result.saveStatus == SaveStatus.created;
   } catch (e) {
     Get.back();
-    Get.snackbar('Fail', 'something was wrong :$e',backgroundColor: Colors.grey,colorText: Colors.white);
+    Get.snackbar(
+      'Fail',
+      'something was wrong :$e',
+      backgroundColor: Colors.grey,
+      colorText: Colors.white,
+    );
     return false;
   }
+}
+
+Future<File> saveTempImage(Uint8List imageBytes) async {
+  final tempDir = await getTemporaryDirectory();
+  final filePath =
+      '${tempDir.path}/edited_meme_${DateTime.now().millisecondsSinceEpoch}.png';
+  final file = File(filePath);
+  await file.writeAsBytes(imageBytes);
+  return file;
 }
 
 Future<bool> requestPermission() async {
@@ -60,7 +89,6 @@ Future<bool> requestPermission() async {
   if (status.isGranted) {
     return true;
   } else if (status.isPermanentlyDenied) {
-    // Arahkan ke settings karena user sudah memilih "Don't ask again"
     await openAppSettings();
     return false;
   } else {

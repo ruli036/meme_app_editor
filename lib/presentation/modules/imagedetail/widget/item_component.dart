@@ -22,7 +22,7 @@ class ItemComponent extends StatelessWidget {
           final delta = details.delta * speedFactor;
           controller.updateElementPosition(element.id, element.position + delta);
         },
-        onTapDown: (_) {
+        onTap: () {
           textComponent.text = element.content;
           showComponentDialog(element: element, controller: textComponent);
         },

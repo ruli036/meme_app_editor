@@ -13,12 +13,22 @@ class MemeImageRepositoryImpl implements MemeImageRepository {
 
   @override
   Future<List<MemeImageModel>> getImages() async {
-    if(AppSetting.online){
-      return await _getImagesOnline();
-    }else{
+    if (AppSetting.online) {
+      try {
+        return await _getImagesOnline();
+      } catch (e) {
+        final localData = await _getImagesOffline();
+        if (localData.isNotEmpty) return localData;
+        rethrow;
+      }
+    } else {
       final localData = await _getImagesOffline();
-      if(localData.isNotEmpty)return localData;
-      return await _getImagesOnline();
+      if (localData.isNotEmpty) return localData;
+      try {
+        return await _getImagesOnline();
+      } catch (e) {
+        rethrow;
+      }
     }
 
   }

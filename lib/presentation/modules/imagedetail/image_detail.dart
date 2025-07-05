@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meme_editor_app/core/helpers/helpers.dart';
 import 'package:meme_editor_app/data/datasource/local/media_storage_helper.dart';
 import 'package:meme_editor_app/data/model/meme_image_model.dart';
 import 'package:meme_editor_app/presentation/modules/imagedetail/controller/image_detail_controller.dart';
@@ -30,6 +31,20 @@ class ImageDetailPage extends StatelessWidget {
             onPressed: () async {
               final bytes = await renderToImage(editorKey);
               if (bytes != null) {
+                final file = await saveTempImage(bytes);
+                await shareImage(file);
+              }
+            },
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+              size: 25,
+            ),
+          ),
+          IconButton(
+            onPressed: () async {
+              final bytes = await renderToImage(editorKey);
+              if (bytes != null) {
                 final image = await saveImageToGallery(bytes);
                 if (image) {
                   Get.back();
@@ -46,7 +61,7 @@ class ImageDetailPage extends StatelessWidget {
             icon: Icon(
               Icons.cloud_download_sharp,
               color: Colors.white,
-              size: 35,
+              size: 25,
             ),
           ),
         ],

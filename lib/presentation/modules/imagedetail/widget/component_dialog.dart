@@ -28,7 +28,9 @@ void showComponentDialog({
     ),
     textConfirm: 'Save',
     textCancel: 'Cancel',
-    confirmTextColor: Colors.white,
+    cancelTextColor: Colors.red,
+    buttonColor: Colors.white,
+    confirmTextColor: Colors.green,
     onConfirm: () {
       final text = controller.text;
       final isEmoji = imageController.isEmojiOnly(text);

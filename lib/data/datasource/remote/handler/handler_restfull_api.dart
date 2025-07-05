@@ -10,7 +10,6 @@ class APIHandler {
   Future<BaseApiResponse<T>> performApiRequest<T>({
     required Future<http.Response> Function() request,
     required T Function(dynamic json) fromJson,
-    bool bypassTokenValidation = false,
   }) async {
     try {
       await _checkNetwork();

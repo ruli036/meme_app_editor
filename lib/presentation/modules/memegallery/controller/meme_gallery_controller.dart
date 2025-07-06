@@ -11,6 +11,8 @@ class MemeGalleryController extends GetxController {
   final RxList<MemeImageModel> images = <MemeImageModel>[].obs;
   final TextEditingController searchController = TextEditingController();
   RxBool loading = true.obs;
+  RxBool error = true.obs;
+  RxString errorMessage = ''.obs;
   List<MemeImageModel> imagesTemp = [];
 
   @override
@@ -23,7 +25,14 @@ class MemeGalleryController extends GetxController {
 
   Future<void> getImages() async {
     loading.value = true;
-    images.value = await memeImageRepository.getImages();
+    error.value = false;
+    try{
+      images.value = await memeImageRepository.getImages();
+    }catch(e){
+      loading.value = false;
+      error.value = true;
+      errorMessage.value = "You need connection for the first login to get initial data meme images";
+    }
     imagesTemp = images.toList();
     loading.value = false;
   }

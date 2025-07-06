@@ -27,6 +27,18 @@ class MemeGalleryPage extends StatelessWidget {
                   onRefresh: () => controller.getImages(),
                   isEmpty: controller.images.isEmpty,
                   isLoading: controller.loading.value,
+                  isError: controller.error.value,
+                  errorView: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(controller.errorMessage.value,textAlign: TextAlign.center,),
+                      IconButton(
+                        onPressed: () => controller.getImages(),
+                        icon: Icon(Icons.refresh),
+                      ),
+                    ],
+                  ),
                   child: GridView.builder(
                     padding: EdgeInsets.all(16),
                     gridDelegate:

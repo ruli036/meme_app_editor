@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
-class FloatingButton<T> extends StatelessWidget {
+class FloatingButton<T extends Iterable> extends StatelessWidget {
   final String heroTag;
   final T element;
   final Callback onPressed;
@@ -15,17 +15,12 @@ class FloatingButton<T> extends StatelessWidget {
     required this.icon,
   });
 
-  bool get isDisabled {
-    if (element is Iterable) {
-      return (element as Iterable).isEmpty;
-    }
-    return element == null;
-  }
+  bool get isDisabled => element.isEmpty;
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      heroTag: "Clear",
+      heroTag: heroTag,
       onPressed: isDisabled ? null : onPressed,
       backgroundColor: isDisabled ? Colors.grey.shade600 : null,
       child: Icon(

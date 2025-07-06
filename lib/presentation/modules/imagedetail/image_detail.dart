@@ -70,8 +70,11 @@ class ImageDetailPage extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Image(
-                image: CachedNetworkImageProvider(item.url, cacheKey: item.id),
+              child:  CachedNetworkImage(
+                imageUrl: item.url,
+                cacheKey:item.id,
+                errorWidget: (context, url, error) => Center(child: Icon(Icons.image_not_supported,color: Colors.white,size: size().width/2,)),
+                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
               ),
             ),
             Obx(
@@ -95,21 +98,21 @@ class ImageDetailPage extends StatelessWidget {
           children: [
             FloatingButton<List<List<EditorElementEntity>>>(
               heroTag: "UndoBtn",
-              element: controller.undoStack,
+              element: controller.undoStack.value,
               onPressed: controller.undo,
               icon: Icons.undo,
             ),
             verticalSpace(height: 8),
             FloatingButton<List<List<EditorElementEntity>>>(
               heroTag: "RedoBtn",
-              element: controller.redoStack,
+              element: controller.redoStack.value,
               onPressed: controller.redo,
               icon: Icons.redo,
             ),
             verticalSpace(height: 8),
             FloatingButton<List<EditorElementEntity>>(
               heroTag: "ClearBtn",
-              element: controller.currentElements,
+              element: controller.currentElements.value,
               onPressed: controller.removeAll,
               icon: Icons.delete,
             ),

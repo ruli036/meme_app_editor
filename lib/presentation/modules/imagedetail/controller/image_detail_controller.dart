@@ -9,14 +9,6 @@ class ImageDetailController extends GetxController{
   final RxList<EditorElementEntity> currentElements = <EditorElementEntity>[].obs;
   final RxList<List<EditorElementEntity>> undoStack = <List<EditorElementEntity>>[].obs;
   final RxList<List<EditorElementEntity>> redoStack = <List<EditorElementEntity>>[].obs;
-  final RegExp onlyEmojiRegex = RegExp(
-    r'^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji_Modifier_Base}|\p{Emoji_Component})+$',
-    unicode: true,
-  );
-
-  bool isEmojiOnly(String text) {
-    return onlyEmojiRegex.hasMatch(text.trim());
-  }
 
   void addElement(EditorElementEntity element) {
     undoStack.add(List.from(currentElements));

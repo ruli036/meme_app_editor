@@ -12,24 +12,20 @@ class ItemImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.toNamed(AppRoutes.detailImage,arguments: item),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(2, 2),
-              blurRadius: 2,
-              spreadRadius: 1,
-            ),
-          ],
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(item.url,cacheKey:item.id),
-          ),
-          color: Colors.white,
-        ),
-        child: Stack(
+      child: Stack(
           children: [
+            Center( 
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl: item.url,
+                  cacheKey:item.id,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => Center(child: Icon(Icons.image_not_supported)),
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                ),
+              ),
+            ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
@@ -50,7 +46,6 @@ class ItemImage extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }

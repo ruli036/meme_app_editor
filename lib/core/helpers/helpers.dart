@@ -7,6 +7,11 @@ import 'package:meme_editor_app/core/constant.dart';
 import 'package:meme_editor_app/data/datasource/local/local_key.dart';
 import 'package:share_plus/share_plus.dart';
 
+final RegExp onlyEmojiRegex = RegExp(
+  r'^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji_Modifier_Base}|\p{Emoji_Component})+$',
+  unicode: true,
+);
+
 Size size() {
   return MediaQuery.of(Get.context!).size;
 }
@@ -27,4 +32,8 @@ void toggleTheme(bool value) {
   AppSetting.isDarkMode.value = value;
   Get.changeThemeMode(value ? ThemeMode.dark : ThemeMode.light);
   GetStorage().write(LocalKeys.darkMode, value);
+}
+
+bool isEmojiOnly(String text) {
+  return onlyEmojiRegex.hasMatch(text.trim());
 }

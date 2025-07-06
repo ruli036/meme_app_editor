@@ -9,7 +9,7 @@ class MemeImageRepositoryImpl implements MemeImageRepository {
   final MemeImageServiceLocalDataSource localDb;
   final MemeImageServiceDataSource dataSource;
 
-  MemeImageRepositoryImpl(this.dataSource,this.localDb);
+  MemeImageRepositoryImpl(this.dataSource, this.localDb);
 
   @override
   Future<List<MemeImageModel>> getImages() async {
@@ -30,26 +30,25 @@ class MemeImageRepositoryImpl implements MemeImageRepository {
         rethrow;
       }
     }
-
   }
 
   Future<List<MemeImageModel>> _getImagesOnline() async {
     List<MemeImageModel> result = [];
-    final response = await dataSource.getMemeImages();
+    final response = await dataSource.getMemeImages().timeout(Duration(seconds: 6));
     final data = response.data.data;
     for (var item in data?.memes ?? []) {
       final data = MemeImageModel(
-          id: item.id,
-          name:  item.name,
-          url:  item.url,
-          width:  item.width,
-          height:  item.height,
-          boxCount:  item.boxCount,
-          captions:  item.captions
+        id: item.id,
+        name: item.name,
+        url: item.url,
+        width: item.width,
+        height: item.height,
+        boxCount: item.boxCount,
+        captions: item.captions,
       );
       result.addAll({data});
     }
-    localDb.saveMemeImageList(result,key: LocalKeys.memeImageList);
+    localDb.saveMemeImageList(result, key: LocalKeys.memeImageList);
     return result;
   }
 

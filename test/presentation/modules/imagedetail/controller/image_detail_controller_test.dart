@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meme_editor_app/core/helpers/helpers.dart';
 import 'package:meme_editor_app/presentation/modules/imagedetail/controller/image_detail_controller.dart';
 import 'package:meme_editor_app/domain/entities/editor_element_entity.dart';
 
@@ -53,8 +54,8 @@ void main() {
   });
 
   test('isEmojiOnly correctly detects emoji', () {
-    expect(controller.isEmojiOnly("😀😂👍"), true);
-    expect(controller.isEmojiOnly("Hello 😀"), false);
+    expect(isEmojiOnly("😀😂👍"), true);
+    expect(isEmojiOnly("Hello 😀"), false);
   });
 
   test('updateElementPosition updates the position', () {

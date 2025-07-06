@@ -5,6 +5,7 @@ import 'package:media_store_plus/media_store_plus.dart';
 import 'package:meme_editor_app/app/bindings/bindings.dart';
 import 'package:meme_editor_app/app/routes/app_pages.dart';
 import 'package:meme_editor_app/app/routes/app_routes.dart';
+import 'package:meme_editor_app/core/constant.dart';
 import 'package:meme_editor_app/core/themes/app_themes.dart';
 import 'package:meme_editor_app/data/datasource/local/local_key.dart';
 
@@ -15,6 +16,7 @@ void main() async {
 
   final storage = GetStorage();
   final isDarkMode = storage.read(LocalKeys.darkMode) ?? false;
+  AppSetting.isDarkMode.value = isDarkMode;
   runApp(MyApp(isDarkMode: isDarkMode,));
 }
 

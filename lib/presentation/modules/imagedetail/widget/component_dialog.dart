@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meme_editor_app/core/helpers/helpers.dart';
 import 'package:meme_editor_app/domain/entities/editor_element_entity.dart';
 import 'package:meme_editor_app/presentation/modules/imagedetail/controller/image_detail_controller.dart';
 
@@ -33,7 +34,7 @@ void showComponentDialog({
     confirmTextColor: Colors.green,
     onConfirm: () {
       final text = controller.text;
-      final isEmoji = imageController.isEmojiOnly(text);
+      final isEmoji = isEmojiOnly(text);
 
       final newItem = EditorElementEntity(
         id: element?.id??imageController.currentElements.length+1,

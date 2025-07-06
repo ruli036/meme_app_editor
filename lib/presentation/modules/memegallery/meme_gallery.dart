@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meme_editor_app/core/constant.dart';
+import 'package:meme_editor_app/core/helpers/helpers.dart';
 import 'package:meme_editor_app/presentation/modules/memegallery/controller/meme_gallery_controller.dart';
 import 'package:meme_editor_app/presentation/modules/memegallery/widget/item_image.dart';
 import 'package:meme_editor_app/presentation/modules/memegallery/widget/search_form.dart';
@@ -63,9 +64,12 @@ class MemeGalleryPage extends StatelessWidget {
                 ListTile(
                   title: Text("Theme Mode", style: TextStyle(fontSize: 14)),
                   trailing: SwitchButton(
+                    icon1: Icons.wb_sunny,
+                    icon2: Icons.nightlight_round,
                     status: AppSetting.isDarkMode.value,
                     onToggle: (value) {
                       AppSetting.isDarkMode.value = value;
+                      toggleTheme(value);
                     },
                   ),
                 ),

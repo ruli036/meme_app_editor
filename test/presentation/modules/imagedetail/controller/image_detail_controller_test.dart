@@ -70,8 +70,10 @@ void main() {
     final element = EditorElementEntity(id: 1, type: 'text', content: 'To remove', position: Offset(0, 0));
     controller.addElement(element);
 
-    controller.remove(1);
+    controller.removeAll();
 
     expect(controller.currentElements.length, 0);
+    expect(controller.redoStack.length, 0);
+    expect(controller.undoStack.length, 0);
   });
 }

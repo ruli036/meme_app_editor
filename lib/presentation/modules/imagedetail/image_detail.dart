@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:meme_editor_app/core/helpers/helpers.dart';
 import 'package:meme_editor_app/data/datasource/local/media_storage_helper.dart';
 import 'package:meme_editor_app/data/model/meme_image_model.dart';
+import 'package:meme_editor_app/domain/entities/editor_element_entity.dart';
 import 'package:meme_editor_app/presentation/modules/imagedetail/controller/image_detail_controller.dart';
 import 'package:meme_editor_app/presentation/modules/imagedetail/widget/component_dialog.dart';
+import 'package:meme_editor_app/presentation/modules/imagedetail/widget/floating_button.dart';
 import 'package:meme_editor_app/presentation/modules/imagedetail/widget/item_component.dart';
 
 class ImageDetailPage extends StatelessWidget {
@@ -35,11 +37,7 @@ class ImageDetailPage extends StatelessWidget {
                 await shareImage(file);
               }
             },
-            icon: Icon(
-              Icons.share,
-              color: Colors.white,
-              size: 25,
-            ),
+            icon: Icon(Icons.share, color: Colors.white, size: 25),
           ),
           IconButton(
             onPressed: () async {
@@ -52,7 +50,7 @@ class ImageDetailPage extends StatelessWidget {
                     duration: Duration(seconds: 2),
                     'Seuccess',
                     'Image was success to download ',
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.green,
                     colorText: Colors.white,
                   );
                 }
@@ -91,36 +89,41 @@ class ImageDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton(
-            heroTag: "Clear",
-            onPressed: controller.removeAll,
-            child: Icon(Icons.delete),
-          ),
-          SizedBox(height: 8),
-          FloatingActionButton(
-            heroTag: "undo",
-            onPressed: controller.undo,
-            child: Icon(Icons.undo),
-          ),
-          SizedBox(height: 8),
-          FloatingActionButton(
-            heroTag: "redo",
-            onPressed: controller.redo,
-            child: Icon(Icons.redo),
-          ),
-          SizedBox(height: 8),
-          FloatingActionButton(
-            heroTag: "add",
-            onPressed: () {
-              textComponent.clear();
-              showComponentDialog(controller: textComponent);
-            },
-            child: Icon(Icons.text_fields),
-          ),
-        ],
+      floatingActionButton: Obx(
+        () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingButton<List<List<EditorElementEntity>>>(
+              heroTag: "UndoBtn",
+              element: controller.undoStack,
+              onPressed: controller.undo,
+              icon: Icons.undo,
+            ),
+            verticalSpace(height: 8),
+            FloatingButton<List<List<EditorElementEntity>>>(
+              heroTag: "RedoBtn",
+              element: controller.redoStack,
+              onPressed: controller.redo,
+              icon: Icons.redo,
+            ),
+            verticalSpace(height: 8),
+            FloatingButton<List<EditorElementEntity>>(
+              heroTag: "ClearBtn",
+              element: controller.currentElements,
+              onPressed: controller.removeAll,
+              icon: Icons.delete,
+            ),
+            verticalSpace(height: 8),
+            FloatingActionButton(
+              heroTag: "add",
+              onPressed: () {
+                textComponent.clear();
+                showComponentDialog(controller: textComponent);
+              },
+              child: Icon(Icons.text_fields),
+            ),
+          ],
+        ),
       ),
     );
   }

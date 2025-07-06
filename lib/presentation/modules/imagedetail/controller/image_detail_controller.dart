@@ -27,12 +27,15 @@ class ImageDetailController extends GetxController{
   void editElement(EditorElementEntity element) {
     final index = currentElements.indexWhere((e) => e.id == element.id);
     if (index != -1) {
+      undoStack.add(List.from(currentElements));
       currentElements[index] = element;
     }
   }
 
   void removeAll() {
       currentElements.clear();
+      undoStack.clear();
+      redoStack.clear();
   }
   void undo() {
     if (undoStack.isNotEmpty) {

@@ -21,7 +21,7 @@ Future<Uint8List?> renderToImage(GlobalKey key) async {
     Get.snackbar(
       'Fail rendering image',
       'something was wrong :$e',
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.red,
       colorText: Colors.white,
     );
     return null;
@@ -31,6 +31,7 @@ Future<Uint8List?> renderToImage(GlobalKey key) async {
 Future<bool> saveImageToGallery(Uint8List imageBytes) async {
   Get.defaultDialog(
     backgroundColor: Colors.transparent,
+    title: '',
     content: CircularProgressIndicator(),
   );
   MediaStore.appFolder = "Meme Editor";
@@ -41,7 +42,7 @@ Future<bool> saveImageToGallery(Uint8List imageBytes) async {
     Get.snackbar(
       'Permission Denied',
       'Fail to save image',
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.yellow,
       colorText: Colors.white,
     );
     requestPermission();
@@ -67,7 +68,7 @@ Future<bool> saveImageToGallery(Uint8List imageBytes) async {
     Get.snackbar(
       'Fail',
       'something was wrong :$e',
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.red,
       colorText: Colors.white,
     );
     return false;

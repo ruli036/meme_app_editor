@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,8 +11,8 @@ Size size() {
   return MediaQuery.of(Get.context!).size;
 }
 
-Widget verticalSpace() {
-  return SizedBox(height: 16);
+Widget verticalSpace({double? height}) {
+  return SizedBox(height: height ?? 16);
 }
 
 Future<void> shareImage(File imageFile) async {

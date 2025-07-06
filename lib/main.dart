@@ -6,14 +6,15 @@ import 'package:meme_editor_app/app/bindings/bindings.dart';
 import 'package:meme_editor_app/app/routes/app_pages.dart';
 import 'package:meme_editor_app/app/routes/app_routes.dart';
 import 'package:meme_editor_app/core/themes/app_themes.dart';
+import 'package:meme_editor_app/data/datasource/local/local_key.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MediaStore.ensureInitialized();
-  await GetStorage.init(); // jika pakai GetStorage
+  await GetStorage.init();
 
   final storage = GetStorage();
-  final isDarkMode = storage.read('darkMode') ?? false;
+  final isDarkMode = storage.read(LocalKeys.darkMode) ?? false;
   runApp(MyApp(isDarkMode: isDarkMode,));
 }
 

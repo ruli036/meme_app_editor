@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SwitchButton extends StatefulWidget {
-  final IconData? icon1;
-  final IconData? icon2;
+  final IconData icon1;
+  final IconData icon2;
   bool status;
   final Function(bool)? onToggle;
 
   SwitchButton({
     super.key,
     required this.status,
-    this.icon1 = Icons.wb_sunny,
-    this.icon2 = Icons.nightlight_round,
+    required this.icon1,
+    required this.icon2,
     this.onToggle,
   });
 

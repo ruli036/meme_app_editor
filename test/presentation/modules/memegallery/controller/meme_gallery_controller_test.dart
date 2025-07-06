@@ -37,12 +37,13 @@ void main() {
     controller = MemeGalleryController(memeImageRepository: mockRepository);
   });
 
-  test('getImages fetches data and sets loading false', () async {
+  test('getImages fetches data and sets loading false and error false', () async {
     when(() => mockRepository.getImages()).thenAnswer((_) async => dummyImages);
 
     await controller.getImages();
 
     expect(controller.loading.value, false);
+    expect(controller.error.value, false);
     expect(controller.images.length, 2);
     expect(controller.images[0].name, 'Funny Cat');
   });

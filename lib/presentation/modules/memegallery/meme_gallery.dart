@@ -63,9 +63,9 @@ class MemeGalleryPage extends StatelessWidget {
                 ListTile(
                   title: Text("Theme Mode", style: TextStyle(fontSize: 14)),
                   trailing: SwitchButton(
-                    status: AppSetting.dartMode,
+                    status: AppSetting.isDarkMode.value,
                     onToggle: (value) {
-                      AppSetting.dartMode = value;
+                      AppSetting.isDarkMode.value = value;
                     },
                   ),
                 ),

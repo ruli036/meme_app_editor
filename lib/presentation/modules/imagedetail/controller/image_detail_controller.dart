@@ -19,8 +19,8 @@ class ImageDetailController extends GetxController{
   }
 
   void addElement(EditorElementEntity element) {
-    currentElements.add(element);
     undoStack.add(List.from(currentElements));
+    currentElements.add(element);
     redoStack.clear();
   }
 

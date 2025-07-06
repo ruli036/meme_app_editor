@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
+
 class AppSetting{
-  static bool dartMode = false;
+  static RxBool isDarkMode = false.obs;
   static bool online = true;
 }

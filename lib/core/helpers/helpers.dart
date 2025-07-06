@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:meme_editor_app/core/constant.dart';
+import 'package:meme_editor_app/data/datasource/local/local_key.dart';
 import 'package:share_plus/share_plus.dart';
 
 Size size() {
@@ -18,4 +22,10 @@ Future<void> shareImage(File imageFile) async {
     files: [XFile(imageFile.path)],
   );
   await SharePlus.instance.share(param);
+}
+
+void toggleTheme(bool value) {
+  AppSetting.isDarkMode.value = value;
+  Get.changeThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+  GetStorage().write(LocalKeys.darkMode, value);
 }
